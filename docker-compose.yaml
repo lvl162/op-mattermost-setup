@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  openproject:
+    image: openproject/community:11
+    ports:
+      - "8080:80"
+    environment:
+      - SECRET_KEY_BASE=secret
+      - OPENPROJECT_HTTPS=false
+    volumes:
+      - oppgdata1:/var/openproject/pgdata
+      - opdata1:/var/openproject/assets
+
+  mattermost:
+    image: mattermost/mattermost-preview
+    ports:
+      - "8065:8065"
+    volumes:
+      - mattermost:/mattermost
+
+  pluginservice:
+    image: custom
+    ports:
+      - "3000:3000"
+    env_file: plugin.env
+
+volumes:
+  mattermost:
+  oppgdata1:
+  opdata1:
